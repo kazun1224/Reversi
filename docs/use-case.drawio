@@ -1,0 +1,82 @@
+<mxfile host="65bd71144e">
+    <diagram id="6dXHMQLZsS_c-4X5Qwfb" name="ページ1">
+        <mxGraphModel dx="725" dy="566" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="リバーシ&lt;br&gt;アプリケーション" style="aspect=fixed;verticalAlign=top;labelBackgroundColor=none;fontColor=default;html=1;whiteSpace=wrap;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="120" width="390" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="プレイヤー" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="100" y="230" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="対戦する" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="240" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;labelBackgroundColor=none;fontColor=default;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="261" width="120" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="・対戦を開始する&lt;br&gt;・盤面を見る&lt;br&gt;・石を打つ&lt;br&gt;・勝敗を確認する" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;labelBackgroundColor=none;fontColor=default;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="160" width="160" height="61" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="会員登録・&lt;br&gt;ログインする" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="174.5" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="プレイヤーのランキングを確認する" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="420" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="一人で白黒交互に打つ" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="250" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="コンピュータと対戦する" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="410" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="ほかのプレイヤーと対戦する" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="414" y="440" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="endArrow=none;html=1;fontColor=default;exitX=0.012;exitY=1.326;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="6">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="210" y="400" as="sourcePoint"/>
+                        <mxPoint x="260" y="350" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="" style="endArrow=none;html=1;fontColor=default;exitX=0.037;exitY=-0.099;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.02;entryY=0.718;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="6" target="9">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140.72000000000006" y="249.99799999999993" as="sourcePoint"/>
+                        <mxPoint x="259.28" y="328.39" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="自分の過去の対戦結果を確認する" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="310" width="100" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="" style="endArrow=none;html=1;fontColor=default;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="141" y="280" as="sourcePoint"/>
+                        <mxPoint x="260" y="448.39" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;fontColor=default;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="11" target="5">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="290" y="230" as="sourcePoint"/>
+                        <mxPoint x="450" y="230" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="24" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;fontColor=default;entryX=0.798;entryY=1.112;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="5">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="430" y="440" as="sourcePoint"/>
+                        <mxPoint x="359.8240057461203" y="287.3425885733012" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=none;strokeColor=#FF3333;strokeWidth=5;" vertex="1" parent="1">
+                    <mxGeometry x="250" y="224.5" width="320" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;fontColor=default;entryX=0.948;entryY=0.964;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="5">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="507.08" y="420" as="sourcePoint"/>
+                        <mxPoint x="400.9199999999999" y="275.5999999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

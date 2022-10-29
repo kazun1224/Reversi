@@ -17,7 +17,13 @@ app.get("/api/hello", async (req, res) => {
 
 app.get("/api/error", async (req, res) => {
   throw new Error("Error endpoint");
-})
+});
+
+app.post("/api/games", async (req, res) => {
+  const startedAt = new Date();
+  console.log(`started at ${startedAt}`);
+  res.send();
+});
 
 app.use(errorHandler)
 

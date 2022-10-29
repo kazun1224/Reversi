@@ -35,9 +35,16 @@ async function showBoard() {
       boardElement.appendChild(squareElement);
     });
   });
+};
+
+async function registerGame() {
+  await fetch('/api/games',{
+    method: 'POST',
+  })
 }
 
 async function main() {
+  await registerGame();
   await showBoard();
 }
 

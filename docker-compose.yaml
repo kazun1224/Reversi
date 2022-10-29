@@ -10,5 +10,3 @@ services:
       MYSQL_DATABASE: reversi
       MYSQL_USER: reversi
       MYSQL_PASSWORD: password
-
-

@@ -102,12 +102,12 @@ app.get("/api/games/latest/turns/:turnCount", async (req, res) => {
     );
     const turn = turnSelectResult[0][0];
 
-    const squareSelectResult = await connection.execute<mysql.RowDataPacket[]>(
-      "select id, turn_id x, y, disc from squares where turn_id = ?",
+    const squaresSelectResult = await connection.execute<mysql.RowDataPacket[]>(
+      "select id, turn_id, x, y, disc from squares where turn_id = ?",
       [turn["id"]]
     );
 
-    const squares = squareSelectResult[0];
+    const squares = squaresSelectResult[0];
 
     const board = Array.from(Array(8)).map(() => Array.from(Array(8)));
     squares.forEach((s) => {
@@ -119,7 +119,7 @@ app.get("/api/games/latest/turns/:turnCount", async (req, res) => {
       board,
       nextDisc: turn["next_disc"],
       // 決着がついてる場合game_resultsテーブルから取得する
-      winnerDisk: null,
+      winnerDisc: null,
     };
 
     res.json(responseBody);

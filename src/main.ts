@@ -3,6 +3,21 @@ import morgan from "morgan";
 import "express-async-errors";
 import mysql from "mysql2/promise";
 
+const EMPTY = 0;
+const DARK = 1;
+const LIGHT = 2;
+
+const INITIAL_BOARD = [
+  [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+  [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+  [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+  [EMPTY, EMPTY, EMPTY, DARK, LIGHT, EMPTY, EMPTY, EMPTY],
+  [EMPTY, EMPTY, EMPTY, LIGHT, DARK, EMPTY, EMPTY, EMPTY],
+  [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+  [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+  [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+];
+
 const PORT = 3000;
 
 const app = express();
@@ -21,7 +36,7 @@ app.get("/api/error", async (req, res) => {
 });
 
 app.post("/api/games", async (req, res) => {
-  const startedAt = new Date();
+  const now = new Date();
   const connection = await mysql.createConnection({
     host: "localhost",
     database: "reversi",
@@ -31,12 +46,36 @@ app.post("/api/games", async (req, res) => {
   });
   try {
   await connection.beginTransaction()
-  await connection.execute("insert into games (started_at) values (?)",[startedAt])
+  const gameInsertResult =  await connection.execute<mysql.ResultSetHeader>("insert into games (started_at) values (?)",[now])
+  const gameId = gameInsertResult[0].insertId
+
+  const turnInsertResult =  await connection.execute<mysql.ResultSetHeader>("insert into turns (game_id, turn_count, next_disc, end_at) values (?,?,?,?)",[gameId, 0, DARK,now]);
+  const turnId = turnInsertResult[0].insertId
+
+  // マスの数を計算
+  const squareCount = INITIAL_BOARD.map((line)=> line.length).reduce((v1,v2) => v1 + v2,0);
+
+  const squareInsertSql = 'insert into squares (turn_id, x,y,disc) values' + Array.from(Array(squareCount)).map(() => '(?, ?, ?, ?)').join(',');
+
+  const squareInsertValues:any[] = [];
+
+  INITIAL_BOARD.forEach((line, y) => {
+    line.forEach((disc, x) => {
+      squareInsertValues.push(turnId)
+      squareInsertValues.push(x)
+      squareInsertValues.push(y)
+      squareInsertValues.push(disc)
+    })
+  })
+
+  await connection.execute(squareInsertSql,squareInsertValues);
+
+
   await connection.commit()
   } finally {
     await connection.end()
   }
-  res.send();
+  res.status(201).end();
 });
 
 app.use(errorHandler)

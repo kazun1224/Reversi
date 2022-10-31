@@ -7,7 +7,7 @@ use reversi;
 create table
     games (
         id int primary key auto_increment,
-        started_at datetime not null,
+        started_at datetime not null
     );
 
 create table
@@ -18,7 +18,7 @@ create table
         next_disc int,
         end_at datetime not null,
         Foreign key (game_id) references games (id),
-        unique (game_id, turn_count),
+        unique (game_id, turn_count)
     );
 
 create table
@@ -28,7 +28,7 @@ create table
         disc int not null,
         x int not null,
         y int not null,
-        Foreign key (turn_id) references turns (id),
+        Foreign key (turn_id) references turns (id)
     );
 
 create table
@@ -39,7 +39,7 @@ create table
         y int not null,
         disc int not null,
         Foreign key (turn_id) references turns (id),
-        unique (turn_count, x, y),
+        unique (turn_id, x, y)
     );
 
 create table
@@ -48,7 +48,7 @@ create table
         game_id int not null,
         winner_disc int not null,
         end_at datetime not null,
-        Foreign key (game_id) references games (id),
+        Foreign key (game_id) references games (id)
     );
 
 select 'ok' as result

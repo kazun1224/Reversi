@@ -1,12 +1,11 @@
-import { DARK, INITIAL_BOARD } from "../application/constants";
-import { connectMySql } from "../dataaccess/connection";
-import { GameGateway } from "../dataaccess/gameGateway";
-import { SquareGateway } from "../dataaccess/squareGateway";
-import { TurnGateway } from "../dataaccess/turnGateway";
+import { connectMySql } from "../infrastructure/connection";
+import { Game } from "../domain/game/game";
+import { GameRepository } from "../domain/game/gameRepository";
+import { firstTurn } from "../domain/turn/turn";
+import { TurnRepository } from "../domain/turn/turnRepository";
 
-const gameGateway = new GameGateway();
-const turnGateway = new TurnGateway();
-const squareGateway = new SquareGateway();
+const turnRepository = new TurnRepository();
+const gameRepository = new GameRepository();
 
 export class GameService {
   async startNewGame() {
@@ -15,19 +14,19 @@ export class GameService {
     try {
       await connection.beginTransaction();
       // games tableに保存
-      const gameRecord = await gameGateway.insert(connection, now);
-
-      // turns tableに保存
-      const turnRecord = await turnGateway.insert(
+      const game = await gameRepository.save(
         connection,
-        gameRecord.id,
-        0,
-        DARK,
-        now
+        new Game(undefined, now)
       );
 
-      // マスの数を計算
-      await squareGateway.insertAll(connection, turnRecord.id, INITIAL_BOARD);
+      if (!game.id) {
+        throw new Error("game.id not exist");
+      }
+
+      const turn = firstTurn(game.id, now);
+
+      // turns tableに保存
+      await turnRepository.save(connection, turn);
 
       await connection.commit();
     } finally {

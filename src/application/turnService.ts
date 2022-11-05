@@ -1,20 +1,11 @@
-import { connectMySql } from "../dataaccess/connection";
-import { GameGateway } from "../dataaccess/gameGateway";
-import { SquareGateway } from "../dataaccess/squareGateway";
-import { TurnGateway } from "../dataaccess/turnGateway";
-import { MoveGateway } from "../dataaccess/moveGateway";
-import { Turn } from "../domain/turn";
-import { Board } from "../domain/board";
-import { toDisc } from "../domain/disc";
-import { Point } from "../domain/point";
-import { TurnRepository } from "../domain/turnRepository";
-
-const gameGateway = new GameGateway();
-const turnGateway = new TurnGateway();
-const moveGateway = new MoveGateway();
-const squareGateway = new SquareGateway();
+import { connectMySql } from "../infrastructure/connection";
+import { toDisc } from "../domain/turn/disc";
+import { Point } from "../domain/turn/point";
+import { TurnRepository } from "../domain/turn/turnRepository";
+import { GameRepository } from "../domain/game/gameRepository";
 
 const turnRepository = new TurnRepository();
+const gameRepository = new GameRepository();
 
 // データの入れ物Class DTO 【Data Transfer Object】
 class FindLatestGameTurnByTurnCountOutput {
@@ -45,14 +36,17 @@ export class TurnService {
   ): Promise<FindLatestGameTurnByTurnCountOutput> {
     const connection = await connectMySql();
     try {
-      const gameRecord = await gameGateway.findLatest(connection);
-      if (!gameRecord) {
+      const game = await gameRepository.findLatest(connection);
+      if (!game) {
         throw new Error("Latest game not found");
+      }
+      if (!game.id) {
+        throw new Error("game.id not exist");
       }
 
       const turn = await turnRepository.findForGameIdAndTurnCount(
         connection,
-        gameRecord.id,
+        game.id,
         turnCount
       );
 
@@ -72,15 +66,18 @@ export class TurnService {
     const connection = await connectMySql();
     try {
       // ひとつ前のターンを取得する
-      const gameRecord = await gameGateway.findLatest(connection);
-      if (!gameRecord) {
+      const game = await gameRepository.findLatest(connection);
+      if (!game) {
         throw new Error("Latest game not found");
+      }
+      if (!game.id) {
+        throw new Error("game.id not exist");
       }
 
       const previousTurnCount = turnCount - 1;
       const previousTurn = await turnRepository.findForGameIdAndTurnCount(
         connection,
-        gameRecord.id,
+        game.id,
         previousTurnCount
       );
 

@@ -22,3 +22,20 @@ export class Board {
     return this._discs;
   }
 }
+
+const E = Disc.Empty;
+const D = Disc.Dark;
+const L = Disc.Light;
+
+const INITIAL_DISCS = [
+  [E, E, E, E, E, E, E, E],
+  [E, E, E, E, E, E, E, E],
+  [E, E, E, E, E, E, E, E],
+  [E, E, E, D, L, E, E, E],
+  [E, E, E, L, D, E, E, E],
+  [E, E, E, E, E, E, E, E],
+  [E, E, E, E, E, E, E, E],
+  [E, E, E, E, E, E, E, E],
+];
+
+export const initialBoard = new Board(INITIAL_DISCS);

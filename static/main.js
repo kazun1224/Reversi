@@ -14,12 +14,15 @@ const INITIAL_BOARD = [
 ];
 
 const boardElement = document.getElementById("board");
+const nextDiscMessageElement = document.getElementById("next-disc-message");
 
 async function showBoard(turnCount) {
   const response = await fetch(`/api/games/latest/turns/${turnCount}`);
   const responseBody = await response.json();
   const board = responseBody.board;
-  const nextDisk = responseBody.nextDisc;
+  const nextDisc = responseBody.nextDisc;
+
+  showNextDiscMessage(nextDisc);
 
   while (boardElement.firstChild) {
     boardElement.removeChild(boardElement.firstChild);
@@ -39,14 +42,31 @@ async function showBoard(turnCount) {
         squareElement.addEventListener("click", async () => {
           console.log("clicked");
           const nextTurnCount = turnCount + 1;
-          await registerTurn(nextTurnCount, nextDisk, x, y);
-          await showBoard(nextTurnCount);
+          const registerTurnResponse = await registerTurn(
+            nextTurnCount,
+            nextDisc,
+            x,
+            y
+          );
+          if (registerTurnResponse.ok) {
+            await showBoard(nextTurnCount);
+          }
         });
       }
 
       boardElement.appendChild(squareElement);
     });
   });
+}
+
+function showNextDiscMessage(nextDisc) {
+  if (nextDisc) {
+    const color = nextDisc === DARK ? "黒" : "白";
+    nextDiscMessageElement.innerText = `つぎは${color}の番です。`
+  } else {
+    nextDiscMessageElement.innerText = ``
+
+  }
 }
 
 async function registerGame() {
@@ -65,7 +85,7 @@ async function registerTurn(turnCount, disc, x, y) {
     },
   };
 
-  await fetch("/api/games/latest/turns", {
+  return await fetch("/api/games/latest/turns", {
     method: "POSt",
     headers: {
       "Content-Type": "application/json",

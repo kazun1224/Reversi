@@ -1,13 +1,14 @@
 import mysql from "mysql2/promise";
 import { Turn } from "./turn";
-import { SquareGateway } from "../../infrastructure/squareGateway";
-import { TurnGateway } from "../../infrastructure/turnGateway";
-import { MoveGateway } from "../../infrastructure/moveGateway";
+import { SquareGateway } from "../../../infrastructure/squareGateway";
+import { TurnGateway } from "../../../infrastructure/turnGateway";
+import { MoveGateway } from "../../../infrastructure/moveGateway";
 import { Move } from "./move.";
 import { toDisc } from "./disc";
 import { Point } from "./point";
-import { MoveRecord } from "../../infrastructure/moveRecord";
+import { MoveRecord } from "../../../infrastructure/moveRecord";
 import { Board } from "./board";
+import { DomainError } from "../../error/domainError";
 
 const turnGateway = new TurnGateway();
 const squareGateway = new SquareGateway();
@@ -26,7 +27,10 @@ export class TurnRepository {
     );
 
     if (!turnRecord) {
-      throw new Error("Specified record not found");
+      throw new DomainError(
+        "SpecifiedTurnNotFound",
+        "Specified record not found"
+      );
     }
 
     const squareRecords = await squareGateway.findForTurnId(

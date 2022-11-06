@@ -1,8 +1,8 @@
 import { connectMySql } from "../infrastructure/connection";
-import { Game } from "../domain/game/game";
-import { GameRepository } from "../domain/game/gameRepository";
-import { firstTurn } from "../domain/turn/turn";
-import { TurnRepository } from "../domain/turn/turnRepository";
+import { Game } from "../domain/model/game/game";
+import { GameRepository } from "../domain/model/game/gameRepository";
+import { firstTurn } from "../domain/model/turn/turn";
+import { TurnRepository } from "../domain/model/turn/turnRepository";
 
 const turnRepository = new TurnRepository();
 const gameRepository = new GameRepository();
